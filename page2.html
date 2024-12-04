@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+    <pre id="log">...</pre>
+    <hr>
+    <pre id="reqkeepalive">...</pre>
+        <hr>
+    <pre id="reqnormal">...</pre>
+    <script>
+        try {
+            window.top.location.href;
+            log.textContent = "WRONG SETUP - not cross origin";
+        } catch(e) {
+            log.textContent = "OK - iframe is cross origin";
+        }
+        fetch("./service?keepalive", {
+            credentials: "same-origin",
+            keepalive: true,
+        })
+        .then(resp => resp.text())
+        .then(resp => {
+            reqkeepalive.textContent = "keepalive headers:\n" + resp;
+        });
+        fetch("./service?normal", {
+            credentials: "same-origin",
+            keepalive: false,
+        })
+        .then(resp => resp.text())
+        .then(resp => {
+            reqnormal.textContent = "normal fetch headers:\n" + resp;
+        });
+    </script>
+</body>
+</html>
