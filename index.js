@@ -5,7 +5,7 @@ const port = 3000
 app.use(express.static("."));
 
 app.get("/entry2", (req, res) => {
-    res.cookie("SESSIONID", "abcdefgh", { sameSite: "none", secure: true });
+    res.cookie("SESSIONID", "abcdefgh", { sameSite: "none", secure: true, partitioned: true });
     res.status(302);
     res.location("/page2.html");
     res.send("redirecting to page2");
